@@ -14,11 +14,10 @@ describe('1 - Teste a função fetchProducts', () => {
     await fetchProducts('computador')
     expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   });  
-  it('Verifica se o retorno da função com o argumento computador é uma estrutura de dados igual ao objeto computadorSearch', async () => {
-    await fetchProducts('computador')
-    expect(typeof fetchProducts).toEqual(computadorSearch);
+  it('Verifica se o retorno da função com o argumento computador é uma estrutura de dados igual ao objeto computadorSearch', async () => {    
+    expect(typeof await fetchProducts('computador')).toEqual(typeof computadorSearch);
   });
   it('Vericfica se o retorno da função sem argumento retorna um erro com a mensagem "You must provide an url"', async () => {
-    expect(fetchProducts()).rejects.toThrowError('You must provide an url')
+    expect(fetchProducts()).rejects.toThrowError('You must provide an url');
   });
 });
