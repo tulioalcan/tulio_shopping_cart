@@ -72,4 +72,13 @@ const createCartItemElement = ({ id, title, price }) => {
   return li;
 };
 
+const novoItem = async () => {
+  const itens = document.querySelector('.items');
+  const data = await fetchProducts('computador');
+  data.results.forEach((product) => {
+    itens.appendChild(createProductItemElement(product));
+  });
+};
+novoItem();
+
 window.onload = () => { };
