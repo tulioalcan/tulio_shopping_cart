@@ -43,14 +43,12 @@ const cartItemClickListener = (event) => {
   console.log(items);
   const getID = event.target.innerText.split(' ')[1];
   console.log(getID);
-  const getItemIndex = items.findIndex((item) => item.id === getID)
+  const getItemIndex = items.findIndex((item) => item.id === getID);
   console.log(getItemIndex);
-  const newLocalStorage = items.filter((_item, index) => {
-    return index !== getItemIndex;
-  })
+  const newLocalStorage = items.filter((_item, index) => index !== getItemIndex);
   console.log(newLocalStorage);
   saveCartItems(newLocalStorage);
-}
+};
 
  const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
@@ -125,7 +123,6 @@ const getFromLocalStorageOnLoad = () => {
     );
   }
 };
-
 
 window.onload = () => {
   getFromLocalStorageOnLoad();
