@@ -38,7 +38,18 @@ const createCustomElement = (element, className, innerText) => {
  * @returns {Element} Elemento de produto.
  */
 const cartItemClickListener = (event) => {
-  console.log(event)
+  event.target.remove();
+  const items = getSavedCartItems();
+  console.log(items);
+  const getID = event.target.innerText.split(' ')[1];
+  console.log(getID);
+  const getItemIndex = items.findIndex((item) => item.id === getID)
+  console.log(getItemIndex);
+  const newLocalStorage = items.filter((_item, index) => {
+    return index !== getItemIndex;
+  })
+  console.log(newLocalStorage);
+  saveCartItems(newLocalStorage);
 }
 
  const createCartItemElement = ({ id, title, price }) => {
@@ -103,4 +114,19 @@ const novoItem = async () => {
 };
 novoItem();
 
-window.onload = () => { };
+const getFromLocalStorageOnLoad = () => {
+  const productsCart = getSavedCartItems();
+  if (productsCart) {
+    productsCart.forEach(
+      ({ id, title, price }) => (
+        document.querySelector('.cart__items')
+          .appendChild(createCartItemElement({ id, title, price }))
+      ),
+    );
+  }
+};
+
+
+window.onload = () => {
+  getFromLocalStorageOnLoad();
+ };
