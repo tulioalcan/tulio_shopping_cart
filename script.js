@@ -37,6 +37,10 @@ const createCustomElement = (element, className, innerText) => {
  * @param {string} product.thumbnail - URL da imagem do produto.
  * @returns {Element} Elemento de produto.
  */
+const cartItemClickListener = (event) => {
+  console.log(event)
+}
+
  const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -46,14 +50,17 @@ const createCustomElement = (element, className, innerText) => {
 };
 
 const addCartItem = async (event) => {
-  const productID = event.target.parentElement.querySelector('span.item_id').innerText;
+  const productID = event.target.parentElement.querySelector('span.item_id').innerText;  
   const response = await fetchItem(productID);
   const cart = document.querySelector('.cart__items');
-  const { id: sku, title: name, price } = response;
+  const { id, title, price } = response;
 
-  const cartItemLi = createCartItemElement({ sku, name, price });
-
+  const cartItemLi = createCartItemElement({ id, title, price });
+  
   cart.appendChild(cartItemLi);
+  const savedItems = getSavedCartItems();
+  savedItems.push({ id, title, price });
+  saveCartItems(savedItems); 
 };
 
   const createProductItemElement = ({ id, title, thumbnail }) => {
