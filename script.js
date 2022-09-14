@@ -8,6 +8,20 @@
  * @param {string} imageSource - URL da imagem.
  * @returns {Element} Elemento de imagem do produto.
  */
+
+ const cartItemClickListener = (event) => {
+  event.target.remove();
+  const items = getSavedCartItems();
+  
+  const getID = event.target.innerText.split(' ')[1];
+  
+  const getItemIndex = items.findIndex((item) => item.id === getID);
+  
+  const newLocalStorage = items.filter((_item, index) => index !== getItemIndex);
+  
+  saveCartItems(newLocalStorage);
+};
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -37,18 +51,6 @@ const createCustomElement = (element, className, innerText) => {
  * @param {string} product.thumbnail - URL da imagem do produto.
  * @returns {Element} Elemento de produto.
  */
-const cartItemClickListener = (event) => {
-  event.target.remove();
-  const items = getSavedCartItems();
-  console.log(items);
-  const getID = event.target.innerText.split(' ')[1];
-  console.log(getID);
-  const getItemIndex = items.findIndex((item) => item.id === getID);
-  console.log(getItemIndex);
-  const newLocalStorage = items.filter((_item, index) => index !== getItemIndex);
-  console.log(newLocalStorage);
-  saveCartItems(newLocalStorage);
-};
 
  const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
@@ -58,7 +60,7 @@ const cartItemClickListener = (event) => {
   return li;
 };
 
-const addCartItem = async (event) => {
+ const addCartItem = async (event) => {
   const productID = event.target.parentElement.querySelector('span.item_id').innerText;  
   const response = await fetchItem(productID);
   const cart = document.querySelector('.cart__items');
@@ -124,6 +126,6 @@ const getFromLocalStorageOnLoad = () => {
   }
 };
 
-window.onload = () => {
-  getFromLocalStorageOnLoad();
+window.onload = () => {   
+  getFromLocalStorageOnLoad();    
  };
