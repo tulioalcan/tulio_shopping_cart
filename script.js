@@ -126,6 +126,16 @@ const getFromLocalStorageOnLoad = () => {
   }
 };
 
-window.onload = () => {   
+const clearAll = () => {  
+  const products = document.querySelectorAll('.cart__item');   
+    products.forEach((product) => {
+      product.remove();
+    });     
+};
+
+const clearButton = document.querySelector('.empty-cart');
+clearButton.addEventListener('click', clearAll);   
+
+window.onload = () => {    
   getFromLocalStorageOnLoad();    
  };
